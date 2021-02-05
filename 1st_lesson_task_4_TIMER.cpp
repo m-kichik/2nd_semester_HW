@@ -5,8 +5,6 @@
 #include <algorithm>
 #include <string>
 
-std::string makeNumber(std::size_t num);
-
 class Timer
 {
 public:
@@ -23,14 +21,14 @@ public:
     }
 
 public:
-    auto stop()
+    void stop()
     {
         m_full_time += std::chrono::duration_cast
                 < ms_t > (clock_t::now() - m_begin);
         m_is_stopped = true;
     }
 
-    auto printTime()
+    void printTime()
     {
         if(!m_is_stopped)
             stop();
@@ -38,7 +36,7 @@ public:
         std::cout << m_name <<  ", milliseconds: " << m_full_time.count() << std::endl;
     }
 
-    auto goOn()
+    void goOn()
     {
         m_begin = clock_t::now();
         m_is_stopped = false;
@@ -47,9 +45,16 @@ public:
 public:
     ~Timer() noexcept
     {
-        if(! m_is_stopped)
-            stop();
-        std::cout << m_name << ", milliseconds: " << m_full_time.count() << std::endl;
+        try
+        {
+            if(! m_is_stopped)
+                stop();
+            std::cout << m_name << ", milliseconds: " << m_full_time.count() << std::endl;
+        }
+        catch (std::exception& exception)
+        {
+            std::cerr << "timer crashed: " << exception.what() << std::endl;
+        }
     }
 
 private:
