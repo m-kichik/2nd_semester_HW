@@ -10,7 +10,7 @@ class Timer
 public:
     using clock_t = std::chrono::steady_clock;
     using time_point_t = clock_t::time_point;
-    using ms_t = std::chrono::milliseconds;
+    using interval_t = std::chrono::milliseconds;
 
 public:
     explicit Timer(const std::string &name) : m_name(name), m_begin(clock_t::now()) {}
@@ -24,7 +24,7 @@ public:
     void stop()
     {
         m_full_time += std::chrono::duration_cast
-                < ms_t > (clock_t::now() - m_begin);
+                < interval_t > (clock_t::now() - m_begin);
         m_is_stopped = true;
     }
 
@@ -59,7 +59,7 @@ public:
 
 private:
     time_point_t m_begin;
-    ms_t m_full_time{0};
+    interval_t m_full_time{0};
     std::string m_name;
     bool m_is_stopped = false;
     inline static std::size_t nameless_timer_counter = 0u;
