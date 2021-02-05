@@ -15,11 +15,11 @@ public:
     using ms_t = std::chrono::milliseconds;
 
 public:
-    explicit Timer(std::string  name) : m_name(name), m_begin(clock_t::now()) {}
+    explicit Timer(const std::string &name) : m_name(name), m_begin(clock_t::now()) {}
     Timer() : m_name("unknownTimer_"), m_begin(clock_t::now())
     {
         nameless_timer_counter ++;
-        m_name += makeNumber(nameless_timer_counter);
+        m_name += std::to_string(nameless_timer_counter);
     }
 
 public:
@@ -57,22 +57,8 @@ private:
     ms_t m_full_time{0};
     std::string m_name;
     bool m_is_stopped = false;
-    static std::size_t nameless_timer_counter;
+    inline static std::size_t nameless_timer_counter = 0u;
 };
-
-std::size_t Timer::nameless_timer_counter = 0u;
-
-std::string makeNumber(std::size_t num)
-{
-    std::string result;
-    for(; num / 10 > 0 || num != 0;)
-    {
-        result += static_cast <char> (static_cast<std::size_t>('0') + num % 10);
-        num /= 10;
-    }
-    std::reverse(result.begin(), result.end());
-    return result;
-}
 
 int main() {
 
