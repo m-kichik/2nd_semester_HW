@@ -72,9 +72,9 @@ public:
     }
 
 private:
+    std::string m_name;
     time_point_t m_begin;
     interval_t m_full_time{0};
-    std::string m_name;
     bool m_is_stopped = false;
     inline static std::size_t nameless_timer_counter = 0u;
 };

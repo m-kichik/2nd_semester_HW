@@ -1,29 +1,31 @@
-#include <iostream>
 #include <array>
-#include <vector>
-#include <deque>
-#include <list>
-#include <forward_list>
-#include <random>
 #include <chrono>
+#include <deque>
+#include <forward_list>
+#include <iostream>
+#include <list>
 #include <map>
+#include <random>
+#include <vector>
+
 #include "TIMER.h"
 
 int main()
 {
     const auto N = 100000;
     std::uniform_int_distribution rule(0, 1000);
-    std::default_random_engine  e(std::chrono::steady_clock::now().time_since_epoch().count());
+    std::default_random_engine  e(static_cast <std::size_t> (std::chrono::system_clock::now().time_since_epoch().count()));
 
     std::vector <int> randomNumbers{};
 
-    std::array <int, N> arr;
+    std::array <int, N> arr{};
     std::vector <int> vec;
+    vec.reserve(N);
     std::deque <int> deq;
     std::list <int> listik;
     std::forward_list <int> fwListik;
 
-    std::map <std::size_t, std::string> results;
+    std::multimap <std::size_t, std::string> results;
 
     for (auto i = 0u; i < N; ++i) {
             randomNumbers.push_back(rule(e));
@@ -39,23 +41,23 @@ int main()
 
     Timer ta("array, std sort");
     std::sort(arr.begin(), arr.end());
-    results.insert({ta.getTime(), ta.getName()});
+    results.insert({static_cast <std::size_t> (ta.getTime()), ta.getName()});
 
     Timer tv("vector, std sort");
     std::sort(vec.begin(), vec.end());
-    results.insert({tv.getTime(), tv.getName()});
+    results.insert({static_cast <std::size_t> (tv.getTime()), tv.getName()});
 
     Timer td("deque, std sort");
     std::sort(deq.begin(), deq.end());
-    results.insert({td.getTime(), td.getName()});
+    results.insert({static_cast <std::size_t> (td.getTime()), td.getName()});
 
     Timer tlSelf("list, self-sort");
     listik.sort();
-    results.insert({tlSelf.getTime(), tlSelf.getName()});
+    results.insert({static_cast <std::size_t> (tlSelf.getTime()), tlSelf.getName()});
 
     Timer ftlSelf("forward list, self-sort");
     fwListik.sort();
-    results.insert({ftlSelf.getTime(), ftlSelf.getName()});
+    results.insert({static_cast <std::size_t> (ftlSelf.getTime()), ftlSelf.getName()});
 
     for (const auto& [result, name] : results)
     {
