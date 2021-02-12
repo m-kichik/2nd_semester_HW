@@ -18,4 +18,4 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,1000000")
 find_package(Boost REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono HW_2/2nd_lesson_task_2_SPEED_COMPETITION.cpp HW_2/TIMER.h)
+add_executable(chrono HW_2/2nd_lesson_task_2_SPEED_COMPETITION.cpp)

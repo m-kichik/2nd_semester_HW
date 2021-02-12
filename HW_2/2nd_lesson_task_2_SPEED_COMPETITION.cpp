@@ -2,6 +2,7 @@
 #include <chrono>
 #include <deque>
 #include <forward_list>
+#include <iomanip>
 #include <iostream>
 #include <list>
 #include <map>
@@ -61,7 +62,7 @@ int main()
 
     for (const auto& [result, name] : results)
     {
-        std::cout << name << ' ' << result << std::endl;
+        std::cout << std::left << std::setfill(' ') << std::setw(25) << name << ' ' << std::right << std::setfill(' ') << std::setw(5) << result << std::endl;
     }
 
     return 0;
