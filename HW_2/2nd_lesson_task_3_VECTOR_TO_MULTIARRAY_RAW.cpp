@@ -23,14 +23,14 @@ void fill_multi_array(const Container & container, Forward_Iterator multi_array)
 
 	if constexpr (N > 1)
     {
-	    for(auto i = 0u; i < container.size(); i++)
-	    {
-	        fill_multi_array< N - 1 >(container[i], std::next(multi_array, i) -> begin());
+	    for(auto i = 0u; i < std::size(container); i++)
+        {
+	        fill_multi_array< N - 1 >(*std::next(container.begin(), i), std::next(multi_array, i) -> begin());
 	    }
     }
 	else
     {
-	    for(auto& item : container)
+	    for(auto item : container)
 	    {
 	        *(multi_array++) = item;
 	    }
