@@ -21,23 +21,27 @@ int main() {
     std::uniform_int_distribution rule(0, 1000);
     std::default_random_engine  e(static_cast <std::size_t> (std::chrono::system_clock::now().time_since_epoch().count()));
 
+    std::vector <int> randomNumbers;
+    for (auto i = 0u; i < N; ++i)
+        randomNumbers.push_back(e());
+
     std::set <int> st;
     Timer tSt("generate and insert in set");
     for (auto i = 0u; i < N; ++i) {
-        st.insert(e());
+        st.insert(randomNumbers.at(i));
     }
     std::pair <std::string, long long> stInf(tSt.getName(), tSt.getTime());
 
     Timer tVec("copy and sort in vector");
-    std::vector <int> vec(st.begin(), st.end());
+    std::vector <int> vec(randomNumbers);
     std::sort(std::begin(vec), std::end(vec));
     std::pair <std::string, long long> vecInf(tVec.getName(), tVec.getTime());
 
     std::array <int, N> arr{};
-    auto stIterator = std::begin(st);
+    auto randNumIterator = randomNumbers.begin();
     Timer tArr("copy and sort in array");
     for (auto& x: arr) {
-        x = *(stIterator++);
+        x = *(randNumIterator++);
     }
     std::sort(std::begin(arr), std::end(arr));
     std::pair <std::string, long long> arrInf(tArr.getName(), tArr.getTime());
