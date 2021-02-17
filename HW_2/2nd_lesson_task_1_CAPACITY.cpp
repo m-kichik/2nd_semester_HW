@@ -1,6 +1,6 @@
 #include <iostream>
-#include <utility>
 #include <vector>
+#include <exception>
 
 int main()
 {
@@ -14,7 +14,7 @@ int main()
 
         std::cout << std::endl << "INT:" << std::endl;
 
-        for (unsigned int i : sizeV)
+        for (auto i : sizeV)
         {
             std::vector<int> v(i);
             auto capB = v.capacity();
@@ -67,8 +67,11 @@ int main()
 
     // HEAP OVERFLOW (bad alloc): the memory allocation mechanism has not changed...
     {
-        const auto N = 90811045u; // 67108864 - max MinGW, 90811045 - max MS Visual Studio
-        std::vector <long long> v;
+        std::vector <long long> vec;
+        const auto N = vec.max_size(); // 67 108 864 - max MinGW, 90 811 045 - max MS Visual Studio max size MinGW 268 435 455
+        std::vector <long long> v(N / 4);
+        //const auto N = v.max_size();
+        std::cout << N << std::endl;
         std::vector <double> capacities;
         capacities.push_back(static_cast<double>(v.capacity()));
 
@@ -79,7 +82,16 @@ int main()
                 std::cout << v.size() << ' ' << v.capacity() << std::endl;
                 capacities.push_back(static_cast<double>(v.capacity()));
             }
-            v.push_back(42);
+
+            try
+            {
+                v.push_back(42);
+            }
+            catch (std::exception exception)
+            {
+                std::cerr << exception.what() << std::endl;
+                break;
+            }
         }
 
         std::vector normCapacities(capacities);

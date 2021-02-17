@@ -1,8 +1,8 @@
+// using standard 2017
+
 #include <iostream>
 #include <chrono>
-#include <utility>
 #include <vector>
-#include <algorithm>
 #include <string>
 
 class Timer
