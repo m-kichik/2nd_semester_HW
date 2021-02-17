@@ -1,0 +1,70 @@
+number of elements: 10000
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+17018                         6008                          2997
+normalized: 
+5.67835                       2.00467                             1
+
+number of elements: 100000
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+188122                        76084                         30060
+normalized: 
+6.25822                       2.53107                             1
+
+number of elements: 1000
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+2993                          999                           117
+normalized: 
+25.5812                       8.53846                             1
+
+number of elements: 5000
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+14401                         4569                          1993
+normalized: 
+7.22579                       2.29252                             1
+
+number of elements: 5500
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+13114                         4107                          3052
+normalized: 
+4.29685                       1.34567                             1
+
+number of elements: 4500
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+14047                         3989                          2486
+normalized: 
+5.65044                       1.60459                             1
+
+number of elements: 6000
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+12462                         4986                           999
+normalized: 
+12.4745                       4.99099                             1
+
+number of elements: 5800
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+14028                         4554                          1997
+normalized: 
+7.02454                       2.28042                             1
+
+number of elements: 5100
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+7521                          1995                           668
+normalized: 
+11.259                        2.98653                             1
+
+number of elements: 5200
+generate and insert in set    copy and sort in vector        copy and sort in array
+time in nanoseconds: 
+7985                          1997                          2022
+normalized: 
+3.9985                        1                       1.01252
+
