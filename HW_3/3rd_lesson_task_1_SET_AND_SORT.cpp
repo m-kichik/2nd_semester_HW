@@ -23,16 +23,16 @@ int main() {
 
 //    const auto N = 200u;
 
-    for (auto numberOfCycle = 500u; numberOfCycle < 200000u; numberOfCycle += 500u) {
-        std::ifstream inf("randomNumbers.txt");
+    for (auto numberOfCycle = 0u; numberOfCycle <= 5000000u; numberOfCycle += (numberOfCycle > 500000u ? 100000u : 10000u)) {
+        std::ifstream inf("RandWithShuffle5M.txt");
         std::vector <int> randomNumbers(numberOfCycle, 0);
         for (auto i = 0u; i < numberOfCycle; ++i)
-            inf >> randomNumbers.at(i);
+            inf >> randomNumbers[i];
 
-        std::ofstream outfSt("testSet.txt", std::ios::app);
+        std::ofstream outfSt("testSetWithShuffleRelease5M.txt", std::ios::app);
         outfSt << numberOfCycle << ' ' << makeTestSt(numberOfCycle, randomNumbers) << std::endl;
 
-        std::ofstream outfVec("testVector.txt", std::ios::app);
+        std::ofstream outfVec("testVectorWithShuffleRelease5M.txt", std::ios::app);
         outfVec << numberOfCycle << ' ' << makeTestVec(numberOfCycle, randomNumbers) << std::endl;
     }
 
@@ -58,7 +58,7 @@ long long makeTestSt (std::size_t N, std::vector <int> randNum) {
     std::set <int> st;
     Timer tSt("generate and insert in set");
     for (auto i = 0u; i < N; ++i) {
-        st.insert(randNum.at(i));
+        st.insert(randNum[i]);
     }
     return tSt.getTime();
 }

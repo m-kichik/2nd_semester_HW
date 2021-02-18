@@ -12,10 +12,10 @@ set(SFML_ROOT ${SFML_DIR})
 set(CMAKE_MODULE_PATH "${SFML_DIR}/cmake/Modules" ${CMAKE_MODULE_PATH})
 find_package(SFML 2.5 COMPONENTS system window graphics audio network REQUIRED)
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,1000000")
+# set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,1000000")
 
 
 find_package(Boost REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono "HW_3/TIMER.h" HW_3/3rd_lesson_task_1_SET_AND_SORT.cpp)
+add_executable(chrono HW_3/3rd_lesson_task_1_SET_AND_SORT.cpp)
