@@ -15,41 +15,59 @@ void printInFile(std::size_t N, const std::pair<std::string, long long>& stInf,
 void printInLine(std::size_t N, const std::pair<std::string, long long>& stInf,
                  const std::pair<std::string, long long>& vecInf, const std::pair<std::string, long long>& arrInf);
 
+long long makeTestSt (std::size_t N, std::vector <int> randNum);
+
+long long makeTestVec (std::size_t N, std::vector <int> randNum);
+
 int main() {
 
-    const auto N = 5200u;
-    std::uniform_int_distribution rule(0, 1000);
-    std::default_random_engine  e(static_cast <std::size_t> (std::chrono::system_clock::now().time_since_epoch().count()));
+//    const auto N = 200u;
 
-    std::vector <int> randomNumbers;
-    for (auto i = 0u; i < N; ++i)
-        randomNumbers.push_back(e());
+    for (auto numberOfCycle = 500u; numberOfCycle < 200000u; numberOfCycle += 500u) {
+        std::ifstream inf("randomNumbers.txt");
+        std::vector <int> randomNumbers(numberOfCycle, 0);
+        for (auto i = 0u; i < numberOfCycle; ++i)
+            inf >> randomNumbers.at(i);
 
-    std::set <int> st;
-    Timer tSt("generate and insert in set");
-    for (auto i = 0u; i < N; ++i) {
-        st.insert(randomNumbers.at(i));
+        std::ofstream outfSt("testSet.txt", std::ios::app);
+        outfSt << numberOfCycle << ' ' << makeTestSt(numberOfCycle, randomNumbers) << std::endl;
+
+        std::ofstream outfVec("testVector.txt", std::ios::app);
+        outfVec << numberOfCycle << ' ' << makeTestVec(numberOfCycle, randomNumbers) << std::endl;
     }
-    std::pair <std::string, long long> stInf(tSt.getName(), tSt.getTime());
 
-    Timer tVec("copy and sort in vector");
-    std::vector <int> vec(randomNumbers);
-    std::sort(std::begin(vec), std::end(vec));
-    std::pair <std::string, long long> vecInf(tVec.getName(), tVec.getTime());
 
-    std::array <int, N> arr{};
-    auto randNumIterator = randomNumbers.begin();
-    Timer tArr("copy and sort in array");
-    for (auto& x: arr) {
-        x = *(randNumIterator++);
-    }
-    std::sort(std::begin(arr), std::end(arr));
-    std::pair <std::string, long long> arrInf(tArr.getName(), tArr.getTime());
+    /*{
+        std::array <int, N> arr{};
+        auto randNumIterator = randomNumbers.begin();
+        Timer tArr("copy and sort in array");
+        for (auto& x: arr) {
+            x = *(randNumIterator++);
+        }
+        std::sort(std::begin(arr), std::end(arr));
+        std::pair <std::string, long long> arrInf(tArr.getName(), tArr.getTime());
+    }*/
 
-    printInFile(N, stInf, vecInf, arrInf);
+    //printInFile(N, stInf, vecInf, arrInf);
     // printInLine(N, stInf, vecInf, arrInf);
 
     return 0;
+}
+
+long long makeTestSt (std::size_t N, std::vector <int> randNum) {
+    std::set <int> st;
+    Timer tSt("generate and insert in set");
+    for (auto i = 0u; i < N; ++i) {
+        st.insert(randNum.at(i));
+    }
+    return tSt.getTime();
+}
+
+long long makeTestVec (std::size_t N, std::vector <int> randNum) {
+    Timer tVec("copy and sort in vector");
+    std::vector <int> vec(randNum);
+    std::sort(std::begin(vec), std::end(vec));
+    return tVec.getTime();
 }
 
 void printInFile(std::size_t N, const std::pair<std::string, long long>& stInf,
