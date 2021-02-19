@@ -18,4 +18,4 @@ find_package(SFML 2.5 COMPONENTS system window graphics audio network REQUIRED)
 find_package(Boost REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono HW_3/3rd_lesson_task_1_SET_AND_SORT.cpp)
+add_executable(chrono "HW_3/3rd task _ NUMBER OF COLLISIONS/3rd_lesson_task_3_HASH_RESEARCH.cpp")
