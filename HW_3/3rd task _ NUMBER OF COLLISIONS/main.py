@@ -36,7 +36,7 @@ plt.savefig("Vector & Set")
 plt.clf()
 
 xVec, yVec = zip(*[tuple(map(int, line.strip().split())) for line in open(
-    "../testVectorWithShuffleRelease5M.txt").readlines()])
+    "../1st_task_SET_AND_SORT/testVectorWithShuffleRelease5M.txt").readlines()])
 plt.plot(xVec, yVec)
 plt.xlabel("Number of elements")
 plt.ylabel("Time in microseconds")
@@ -45,7 +45,7 @@ plt.savefig("VectorWithShuffle5MRelease")
 plt.clf()
 
 xSet, ySet = zip(*[tuple(map(int, line.strip().split())) for line in open(
-    "../testSetWithShuffleRelease5M.txt").readlines()])
+    "../1st_task_SET_AND_SORT/testSetWithShuffleRelease5M.txt").readlines()])
 plt.plot(xSet, ySet)
 plt.xlabel("Number of elements")
 plt.ylabel("Time in microseconds")
