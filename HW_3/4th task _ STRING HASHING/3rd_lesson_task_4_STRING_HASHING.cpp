@@ -7,19 +7,21 @@
 #include <set>
 #include <vector>
 
+struct HashFunctionsData {
+    std::function <unsigned int(const char*, unsigned int)> hashFunction;
+    std::set <std::size_t> hashedWords;
+    std::size_t numberOfCollisions = 0;
+};
+
 std::set <std::string> makeRandomWords (std::size_t N, std::size_t length) {
     std::uniform_int_distribution letter(97, 122);
     std::default_random_engine  e(static_cast <std::size_t> (std::chrono::system_clock::now().time_since_epoch().count()));
 
     std::set <std::string> words;
 
-    for (; words.size() <= 2000000u;) {
-        std::string str;
-        for (; str.size() < length;) {
-            str.push_back(static_cast<char>(letter(e)));
-        }
-        words.insert(str);
-    }
+    for (std::string str(length, '_'); words.size() <= 2000000u; words.insert(str))
+        for (auto &c : str)
+            c = letter(e);
 
     return words;
 }
@@ -156,58 +158,46 @@ unsigned int APHash(const char* str, unsigned int length) {
     return hash;
 }
 
-std::vector <std::function<unsigned int (const char*, unsigned int)>> makeVectorOfHashFunctions() {
-    std::vector <std::function<unsigned int (const char*, unsigned int)>> vectorOfHashFunctions;
-    vectorOfHashFunctions.emplace_back(RSHash);
-    vectorOfHashFunctions.emplace_back(JSHash);
-    vectorOfHashFunctions.emplace_back(PJWHash);
-    vectorOfHashFunctions.emplace_back(ELFHash);
-    vectorOfHashFunctions.emplace_back(BKDRHash);
-    vectorOfHashFunctions.emplace_back(SDBMHash);
-    vectorOfHashFunctions.emplace_back(DJBHash);
-    vectorOfHashFunctions.emplace_back(DEKHash);
-    vectorOfHashFunctions.emplace_back(APHash);
-    return vectorOfHashFunctions;
-}
-
-void testHashFunctions(std::size_t N, std::size_t length) {
+void testHashFunctions(std::size_t N, std::size_t length, std::size_t numberOfHashFunctions) {
     std::ofstream outf("CollisionsInDifferentHashFunctions.txt");
-    std::set <std::string> st = makeRandomWords(N, length);
-    std::vector <std::string> randWords(st.begin(), st.end());
 
-    auto vectorOfHashFunctions = makeVectorOfHashFunctions();
+    std::set <std::string> randWords = makeRandomWords(N, length);
 
-    std::vector <std::pair<std::string, std::size_t>> hashFunctionsAndCollisions =
-            {{"rsCollisions", 0u}, {"jsCollisions", 0u}, {"pjwCollisions", 0u},
-             {"elfCollisions", 0u}, {"bkdrCollisions", 0u}, {"sdbmCollisions", 0u},
-             {"djbCollisions", 0u}, {"dekCollisions", 0u}, {"apCollisions", 0u}};
+    std::unordered_map <std::string, HashFunctionsData> hashFunctions =
+            {{"rsCollisions", {RSHash}}, {"jsCollisions", {JSHash}}, {"pjwCollisions", {PJWHash}},
+             {"elfCollisions", {ELFHash}}, {"bkdrCollisions", {BKDRHash}}, {"sdbmCollisions", {SDBMHash}},
+             {"djbCollisions", {DJBHash}}, {"dekCollisions", {DEKHash}}, {"apCollisions", {APHash}}};
 
-    for (auto element: hashFunctionsAndCollisions)
-        outf << element.first << ' ';
+    std::vector hashNames ({"rsCollisions", "jsCollisions", "pjwCollisions", "elfCollisions",
+                            "bkdrCollisions", "sdbmCollisions", "djbCollisions", "dekCollisions", "apCollisions"});
 
+    for (auto name : hashNames)
+        outf << name << ' ';
     outf << std::endl;
 
-    std::vector <std::set<std::size_t>> vectorOfSets(9);
+    auto counter = 0u;
 
-
-
-        for (auto randWordIterator = 0u; randWordIterator < N; ++randWordIterator) {
-                for (auto hFuncIterator = 0u; hFuncIterator < 9; ++hFuncIterator) {
-                    if (!vectorOfSets[hFuncIterator].insert(vectorOfHashFunctions[hFuncIterator](randWords[randWordIterator].c_str(), length)).second)
-                        hashFunctionsAndCollisions[hFuncIterator].second++;
-                }
-            if (randWordIterator % 10000 == 0) {
-                outf << randWordIterator << ' ';
-                for (auto element: hashFunctionsAndCollisions)
-                    outf << element.second << ' ';
-                outf << std::endl;
-            }
+    for (const auto& word: randWords) {
+        for (auto step = 0u; step < numberOfHashFunctions; ++step) {
+            auto& hashFuncData = hashFunctions[hashNames[step]];
+            if (!hashFuncData.hashedWords.insert(
+                    hashFuncData.hashFunction(word.c_str(), length)).second)
+                hashFuncData.numberOfCollisions++;
         }
 
+        if (counter % 10000 == 0) {
+            outf << counter;
+            for (auto funcN = 0u; funcN < numberOfHashFunctions; ++funcN)
+                outf << ' ' << hashFunctions[hashNames[funcN]].numberOfCollisions;
+            outf << std::endl;
+        }
+
+        counter ++;
+    }
 }
 
 int main() {
-    testHashFunctions(2000001, 10);
+    testHashFunctions(2000001u, 10u, 9u);
 
     return 0;
 }
