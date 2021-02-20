@@ -10,7 +10,7 @@
 struct HashFunctionsData {
     std::function <unsigned int(const char*, unsigned int)> hashFunction;
     std::set <std::size_t> hashedWords;
-    std::size_t numberOfCollisions = 0;
+    std::size_t numberOfCollisions = 0u;
 };
 
 std::set <std::string> makeRandomWords (std::size_t N, std::size_t length) {
