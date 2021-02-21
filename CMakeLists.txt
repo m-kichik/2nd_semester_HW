@@ -18,4 +18,4 @@ find_package(SFML 2.5 COMPONENTS system window graphics audio network REQUIRED)
 find_package(Boost REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono "HW_3/2nd task _ HASH FOR FLOAT/3rd_lesson_task_2_HASH_FOR_FLOAT.cpp")
+add_executable(chrono "HW_3/3rd_lesson_task_5_PHONE_DIRECTORY.cpp")
