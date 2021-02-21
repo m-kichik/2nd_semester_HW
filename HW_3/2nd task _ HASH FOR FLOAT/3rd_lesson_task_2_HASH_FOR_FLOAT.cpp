@@ -12,8 +12,8 @@ struct HashFunctionsData {
     std::map <std::size_t, std::size_t> duplication;
 };
 
-std::set <double> makeRandomDouble (std::size_t N) {
-    std::uniform_real_distribution <double> number(0., 1000.);
+std::set <double> makeRandomDouble (std::size_t N, double a, double b) {
+    std::uniform_real_distribution <double> number(a, b);
     std::default_random_engine  e(static_cast <std::size_t> (std::chrono::system_clock::now().time_since_epoch().count()));
 
     std::set <double> numbers;
@@ -25,32 +25,22 @@ std::set <double> makeRandomDouble (std::size_t N) {
     return numbers;
 }
 
-std::size_t hashForDoubleV1 (double num) {
-    auto result = 0u;
+std::size_t hashForDoubleV1 (double num, double a, double b, double H) {
+    num -= a;
+    num /= b;
+    num *= H;
 
-    for (; num >= 1.;)
-        num /= 10;
-
-    for(; num < 0.1;)
-        num *= 10;
-
-    for (auto k = 1u; k <= 100000000u; k *= 10) {
-        num *= 10;
-        auto e = static_cast<std::size_t>(num);
-        result += e * k;
-        num -= static_cast<double>(e);
-    }
-
-    return result;
+    return static_cast<std::size_t>(num);
 }
 
-std::size_t hashForDoubleV2 (double num) {
-    auto * pNum = (std::size_t*)(&num);
-    return * pNum;
+std::size_t hashForDoubleV2 (double num, double a, double b, double H) {
+    auto * result = reinterpret_cast<std::size_t*>(&num);
+    return (* result) / H;
 }
 
 void testHashFunction(const std::string& nameOfHashFunction,
-                      const std::function <std::size_t(double)>& hashFunction, const std::set<double>& randNumbers) {
+                      const std::function <std::size_t(double, double, double, double)>& hashFunction, const std::set<double>& randNumbers,
+                      double a, double b, double H) {
 
     HashFunctionsData data;
 
@@ -59,7 +49,7 @@ void testHashFunction(const std::string& nameOfHashFunction,
     auto counter = 0u;
 
     for (auto number : randNumbers) {
-        auto hashedNumber = hashFunction(number);
+        auto hashedNumber = hashFunction(number, a, b, H);
         if(!data.hashedNumbers.insert(hashedNumber).second) {
             data.numberOfCollisions ++;
             data.duplication[hashedNumber] ++;
@@ -81,12 +71,15 @@ void testHashFunction(const std::string& nameOfHashFunction,
 }
 
 int main() {
-    const auto N = 2000000u;
+    const auto H = 100000u;
+    const auto a = 0.;
+    const auto b = 10.;
+    const auto N = 2000000;
 
-    std::set <double> randNumbers = makeRandomDouble(N);
+    std::set <double> randNumbers = makeRandomDouble(N, a, b);
 
-    testHashFunction("hashForDoubleV1", hashForDoubleV1, randNumbers);
-    testHashFunction("hashForDoubleV2", hashForDoubleV2, randNumbers);
+    testHashFunction("hashForDoubleV1", hashForDoubleV1, randNumbers, a, b, H);
+    testHashFunction("hashForDoubleV2", hashForDoubleV2, randNumbers, a, b, H);
 
     return 0;
 }
