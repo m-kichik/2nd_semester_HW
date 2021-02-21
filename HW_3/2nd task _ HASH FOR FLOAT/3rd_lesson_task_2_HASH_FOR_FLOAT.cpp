@@ -27,7 +27,7 @@ std::set <double> makeRandomDouble (std::size_t N, double a, double b) {
 
 std::size_t hashForDoubleV1 (double num, double a, double b, double H) {
     num -= a;
-    num /= b;
+    num /= (b - a);
     num *= H;
 
     return static_cast<std::size_t>(num);
