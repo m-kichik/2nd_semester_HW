@@ -82,7 +82,7 @@ int main () {
 
     // SQUARE EACH ELEMENT IN SEQ1 (#8)
 
-    std::transform (std::begin(seq1), std::end(seq1), seq1.begin(),
+    std::transform (std::begin(seq1), std::end(seq1), std::begin(seq1),
                     [](auto x) { return x * x; });
 
     printS("Seq1 squared: ", seq1);
