@@ -11,8 +11,8 @@
 
 void printS(const std::string& str, const std::vector <int>& vec) {
     std::cout << str;
-    std::for_each(std::begin(vec), std::end(vec),
-                  [](auto x) {std::cout << x << ' ';});
+    std::copy(std::begin(vec), std::end(vec),
+                     std::ostream_iterator < int > (std::cout, " "));
     std::cout << std::endl;
 }
 
@@ -100,15 +100,13 @@ int main () {
     std::cout << "Sum of seq2: " << sumSeq2 << std::endl;
 
     // REPLACE SEVERAL NUMBERS IN SEQ2 WITH 1 (#11)
-    std::fill(std::begin(seq2), std::next(std::begin(seq2), 3), 1);
+    std::fill_n(std::begin(seq2), 3, 1);
 
     printS("Seq2 with 1s: ", seq2);
 
     // MAKE SEQUENCE 3 AS DIFFERENCE BETWEEN SEQ1 AND SEQ2 (#12)
     std::vector <int> seq3;
-    seq3.resize(std::size(seq1));
-    std::transform(std::begin(seq1), std::end(seq1), std::begin(seq2), std::begin(seq3),
-                   [](auto x, auto y) {return x - y;});
+    std::transform(std::begin(seq1), std::end(seq1), std::begin(seq2), std::back_inserter(seq3), std::minus<int>());
 
     printS("Seq3: ", seq3);
 
@@ -130,7 +128,7 @@ int main () {
     printS("Seq3 reversed: ", seq3);
 
     // TOP-3 MAX NUMBERS IN SEQ3 (#16)
-    std::nth_element(std::begin(seq3), std::prev(std::end(seq3), 4), std::end(seq3));
+    std::nth_element(std::begin(seq3), std::prev(std::end(seq3), 3), std::end(seq3));
     std::cout << "Top-3 max numbers in seq3: " << *std::prev(std::end(seq3), 1) << ' '
               << *std::prev(std::end(seq3), 2) << ' ' << *std::prev(std::end(seq3), 3) << std::endl;
 
