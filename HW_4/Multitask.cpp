@@ -70,7 +70,7 @@ int main () {
                                          if (x <= 1)
                                              return false;
 
-                                         for (auto i = 2; i < x; ++i)
+                                         for (auto i = 2; i < std::sqrt(x); ++i)
                                              if (x % i == 0)
                                                  return false;
 
