@@ -23,7 +23,7 @@ int main () {
     // MAKE 1ST SEQUENCE (#1)
     std::vector <int> seq1(10);
 
-    std::iota(seq1.begin(), seq1.end(), 1);
+    std::iota(std::begin(seq1), std::end(seq1), 1);
 
     printS("Seq1: ", seq1);
 
