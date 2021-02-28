@@ -1,6 +1,5 @@
 #include <algorithm>
 #include <chrono>
-#include <fstream>
 #include <functional>
 #include <iomanip>
 #include <iostream>
@@ -161,25 +160,6 @@ int main () {
     printS("Seq2: ", seq2);
     printS("Seq3: ", seq3);
     printS("Seq4: ", seq4);
-
-    // EXTRA TASK: NUMBER OF COMPARISONS
-    std::ofstream outf("Comparisons_in_nth_element.txt");
-    std::vector <int> vectorForSort(1000, 0);
-    std::generate(std::begin(vectorForSort), std::end(vectorForSort),
-                  [&]() {return generator(engine);});
-
-    for (auto i = 0u; i < vectorForSort.size(); ++i) {
-        auto numberOfComparisonsNthElement = 0u;
-        std::vector <int> vectorForNthElement(vectorForSort);
-        std::nth_element(std::begin(vectorForNthElement), std::next(std::begin(vectorForNthElement), i), std::end(vectorForNthElement),
-                         [&numberOfComparisonsNthElement](auto a, auto b) {numberOfComparisonsNthElement++; return a < b;});
-        outf << i << ' ' << numberOfComparisonsNthElement << std::endl;
-    }
-
-    auto numberOfComparisonsSort = 0u;
-    std::sort(std::begin(vectorForSort), std::end(vectorForSort),
-              [&numberOfComparisonsSort](auto a, auto b) {numberOfComparisonsSort++; return a < b;});
-    outf << std::endl << "Number of comparisons in std::sort: " << numberOfComparisonsSort << std::endl;
 
     return 0;
 }
