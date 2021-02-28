@@ -75,7 +75,7 @@ void testHashFunction (std::size_t N) {
     auto randomObjects = makeRandomObjects(N);
     std::set <std::size_t> marker;
     auto numberOfCollisions = 0u;
-    std::ofstream outf("numberOfCollisions_v2.txt", std::ios::app);
+    std::ofstream outf("numberOfCollisions_VS_64.txt"/*, std::ios::app | std::ios::trunc*/);
     for (auto i = 0u; i < N; ++i) {
         if (!marker.insert(hash_value(randomObjects[i].number, randomObjects[i].word, randomObjects[i].expression)).second)
             numberOfCollisions ++;
