@@ -1,8 +1,6 @@
 #include <iostream>
 #include <iomanip>
 
-#include <Windows.h>
-
 int main() {
 
     std::cin.imbue(std::locale("ru_RU.UTF8"));
