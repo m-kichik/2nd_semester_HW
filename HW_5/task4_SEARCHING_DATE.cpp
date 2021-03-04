@@ -12,9 +12,9 @@ int main() {
     std::string dateContainer((std::istreambuf_iterator<char>(inD)), std::istreambuf_iterator<char>());
     std::string timeContainer((std::istreambuf_iterator<char>(inT)), std::istreambuf_iterator<char>());
 
-    std::regex pattern_d(R"(([1-9]\d{0,3})\.(((0{0,1}[13-9])|(1[12]))\.(([12]\d)|(3[01])|(0{0,1}[1-9])))|((0{0,1}2)\.(([012]{0,1}\d))))");
+    std::regex pattern_d(R"((\d{0,4})\.(((0{0,1}[13-9])|(1[12]))\.(([12]\d)|(3[01])|(0{0,1}[1-9])))|((0{0,1}2)\.(([012]{0,1}\d))))");
 
-    std::regex pattern_t(R"((((1\d)|(2\[0-3])|(0{0,1}\d))\.(([1-5]\d)|(0{0,1}\d))\.((([1-5]\d)|(0{0,1}\d)))))");
+    std::regex pattern_t(R"((((1\d)|(2\[0-3])|(0{0,1}\d))(\.(([1-5]\d)|(0{0,1}\d))){2}))");
 
     std::cout << "date: " << std::endl;
 
