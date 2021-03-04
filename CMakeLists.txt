@@ -6,7 +6,7 @@ SET (CMAKE_CXX_COMPILER_WORKS 1)
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_FLAGS "-Wdeprecated-declarations")
 set (CMAKE_CXX_FLAGS "-Wall")
-#set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_STATIC_LIBS ON)
 #set (Boost_INCLUDE_DIR C:/boost_1_75_0/)
 #set (Boost_LIBRARY_DIR C:/boost_1_75_0/boost/lib/)
 #set(SFML_DIR C:/SFML-2.5.1)
@@ -17,9 +17,9 @@ set (CMAKE_CXX_FLAGS "-Wall")
 # set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,1000000")
 
 
-#find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
-#INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
+INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono HW_5/task1_CURRENCY_CONVERTER.cpp)
+add_executable(chrono HW_5/task2_TRANSLIT.cpp)
 
-#target_link_libraries(chrono Boost::locale)
+target_link_libraries(chrono Boost::locale)
