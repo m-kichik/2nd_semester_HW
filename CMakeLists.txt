@@ -19,6 +19,6 @@ set(Boost_USE_STATIC_LIBS ON)
 #find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 #INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono HW_5/task4_SEARCHING_DATE.cpp)
+add_executable(chrono HW_5/task3_SEARCHING_EMAIL_ADDRESSES.cpp)
 
 #target_link_libraries(chrono Boost::locale)

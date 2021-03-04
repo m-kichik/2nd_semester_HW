@@ -1,0 +1,13 @@
+good variant: abcde@mail_1.ru
+about prefixes:
+normal address: abc_de@mail_2.ru
+normal address: 1_2_3_4@mail_3.ru
+invalid address: abc..de@mail_4.ru correct address: abc.de@mail_5.ru
+other problem: abcde-@mail_6.ru and solution: abcd-e@mail_7.ru
+we can't write this: .abcde@mail_8.ru
+also bad variant: abc#de@mail_9.ru
+about domains:
+not enough letters in the last portion of the domain: abcde@mail_10.r
+bad simbol: abcde@ma#il11.ru good variant: abcde@ma-il_12.ru
+there must be two portions: abcde@mail_13 correct form: abcde@mail_14.ru
+another mistake: abcde@mail_15..ru fixed: abcde@mail_16.ru
