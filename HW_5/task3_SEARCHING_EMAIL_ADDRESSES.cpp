@@ -17,5 +17,10 @@ int main() {
             std::sregex_token_iterator(),
             std::ostream_iterator < std::string >(std::cout, "\n"));
 
+
+    for (std::string str; std::getline(std::cin, str);) {
+
+    }
+
     return 0;
 }

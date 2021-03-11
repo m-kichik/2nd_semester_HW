@@ -35,7 +35,7 @@ std::size_t hashForDoubleV1 (double num, double a, double b, double H) {
 
 std::size_t hashForDoubleV2 (double num, double a, double b, double H) {
     auto * result = reinterpret_cast<std::size_t*>(&num);
-    return (* result) / H;
+    return (* result) /*/ H*/;
 }
 
 void testHashFunction(const std::string& nameOfHashFunction,

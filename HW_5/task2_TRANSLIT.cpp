@@ -73,12 +73,14 @@ std::unordered_map <char32_t, std::u32string> makeTranslitDictionary () {
 };
 
 int main() {
-    system("chcp 1251");
+    //system("chcp 1251");
     std::string expression;
     std::getline(std::cin, expression);
+    //std::cin >> expression;
 
     std::string u8expression = convert_locale_to_utf(expression);
     std::u32string u32expression = boost::locale::conv::utf_to_utf<char32_t>(u8expression);
+    //std::u32string u32expression = boost::locale::conv::utf_to_utf<char32_t>(expression);
 
     auto translitDictionary = makeTranslitDictionary();
 
@@ -88,6 +90,7 @@ int main() {
         u32translittedExpression += translitDictionary[x];
 
     std::string u8translittedExpression = boost::locale::conv::utf_to_utf<char>(u32translittedExpression);
+    //std::string translittedExpression = boost::locale::conv::utf_to_utf<char>(u32translittedExpression);
 
     std::string translittedExpression = convert_utf_to_locale(u8translittedExpression);
 
