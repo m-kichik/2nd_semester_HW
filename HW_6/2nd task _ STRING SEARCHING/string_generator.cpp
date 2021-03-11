@@ -23,5 +23,5 @@ void makeFileWithRandomStrings(std::size_t N) {
 
 int main() {
     makeFileWithRandomStrings(1000);
-    return EXIT_SUCCESS;
+    return 0;
 }
