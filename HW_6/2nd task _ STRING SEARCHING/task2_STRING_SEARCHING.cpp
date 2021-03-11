@@ -28,5 +28,5 @@ int main() {
     std::getline(file, string);
     std::cout << string << std::endl;
 
-    return EXIT_SUCCESS;
+    return 0;
 }
