@@ -20,7 +20,7 @@ set (CMAKE_CXX_FLAGS "-Wall")
 #find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 #INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono "HW_6/2nd task _ STRING SEARCHING/task2_STRING_SEARCHING.cpp" HW_6/test.cpp "HW_6/3rd task _ DIRECTORY CONTENTS.cpp" "HW_6/3rd task _ DIRECTORY CONTENTS.cpp")
+add_executable(chrono "HW_6/1st task _ DELETING COMMENTS/DELETING_COMMENTS.cpp")
 # ClassWork/11_03_2021/11_03_2021.cpp
 # "HW_6/2nd task _ STRING SEARCHING/task2_STRING_SEARCHING.cpp"
 
