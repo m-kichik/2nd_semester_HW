@@ -20,5 +20,5 @@ set (CMAKE_CXX_FLAGS "-Wall")
 #find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 #INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono "HW_6/4th task _ JSON PEOPLE/JSON_PEOPLE.cpp")
+add_executable(chrono "HW_6/3rd task _ DIRECTORY CONTENTS/3rd_task_DIRECTORY_CONTENTS.cpp")
 #target_link_libraries(chrono Boost::locale)
