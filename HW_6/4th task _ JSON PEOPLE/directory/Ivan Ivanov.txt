@@ -1,0 +1,11 @@
+{
+    "Address": {
+        "City": "Moskow",
+        "Country": "Russia",
+        "Street": "Tverskaya"
+    },
+    "Age": 25,
+    "Animal": "fish",
+    "Name": "Ivan",
+    "Surname": "Ivanov"
+}

@@ -1,0 +1,11 @@
+{
+    "Address": {
+        "City": "Minsk",
+        "Country": "Belarus",
+        "Street": "Lenina"
+    },
+    "Age": 22,
+    "Animal": "none",
+    "Name": "Aleksandr",
+    "Surname": "Aleksandrov"
+}

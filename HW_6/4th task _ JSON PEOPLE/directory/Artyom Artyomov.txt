@@ -1,0 +1,11 @@
+{
+    "Address": {
+        "City": "Dolgoprudny",
+        "Country": "Russia",
+        "Street": "Pervomaiskaya"
+    },
+    "Age": 21,
+    "Animal": "dog",
+    "Name": "Artyom",
+    "Surname": "Artyomov"
+}
