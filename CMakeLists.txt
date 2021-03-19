@@ -3,8 +3,8 @@ project(chrono)
 
 SET (CMAKE_C_COMPILER_WORKS 1)
 SET (CMAKE_CXX_COMPILER_WORKS 1)
-set (CMAKE_CXX_STANDARD 17)
-set (CMAKE_CXX_FLAGS "-Wdeprecated-declarations")
+set (CMAKE_CXX_STANDARD 20)
+set (CMAKE_CXX_FLAGS "-Wdeprecated-declarations -pthread")
 set (CMAKE_CXX_FLAGS "-Wall")
 #set(Boost_USE_STATIC_LIBS ON)
 #set (Boost_INCLUDE_DIR C:/boost_1_75_0/)
@@ -14,11 +14,11 @@ set (CMAKE_CXX_FLAGS "-Wall")
 #set(CMAKE_MODULE_PATH "${SFML_DIR}/cmake/Modules" ${CMAKE_MODULE_PATH})
 #find_package(SFML 2.5 COMPONENTS system window graphics audio network REQUIRED)
 
- set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
-
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 
 #find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 #INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono "HW_6/3rd task _ DIRECTORY CONTENTS/3rd_task_DIRECTORY_CONTENTS.cpp")
+add_executable(chrono "HW_7/1st task _ CALCULATE PI/CALCULATE_PI.cpp" "HW_7/2nd task _ PARALLEL ACCUMULATE/PARALLEL_ACCUMULATE.cpp")
+
 #target_link_libraries(chrono Boost::locale)
