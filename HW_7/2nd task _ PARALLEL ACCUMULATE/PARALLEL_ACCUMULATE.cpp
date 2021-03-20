@@ -51,7 +51,7 @@ void testParallelAccumulate(std::size_t numberOfCycles) {
         ofstream << i + 1 << ' ' << times[i] << std::endl;
 }
 
-// time of execution = 18 min 2 s, when N = 1000
+// time of execution = 18 min 2 s, N = 1000
 
 int main() {
     const auto N = 1000u;
