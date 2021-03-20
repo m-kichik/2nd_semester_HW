@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <chrono>
+#include <utility>
 #include <vector>
 #include <string>
 
@@ -14,7 +15,7 @@ public:
     using interval_t = std::chrono::microseconds;
 
 public:
-    explicit Timer(const std::string &name) : m_name(name), m_begin(clock_t::now()) {}
+    explicit Timer(std::string name) : m_name(std::move(name)), m_begin(clock_t::now()) {}
     Timer() : m_name("unknownTimer_"), m_begin(clock_t::now())
     {
         nameless_timer_counter ++;
