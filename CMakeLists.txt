@@ -19,6 +19,6 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 #find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 #INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono "HW_7/1st task _ CALCULATE PI/CALCULATE_PI.cpp" "HW_7/2nd task _ PARALLEL ACCUMULATE/PARALLEL_ACCUMULATE.cpp")
+add_executable(chrono "HW_7/2nd task _ PARALLEL ACCUMULATE/PARALLEL_ACCUMULATE.cpp")
 
 #target_link_libraries(chrono Boost::locale)
