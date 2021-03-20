@@ -9,16 +9,13 @@
 #include "../../Timer/TIMER.h"
 
 template < typename Iterator, typename T >
-T parallelAccumulate(Iterator first, Iterator last, T init, std::size_t numberOfThreads)
-{
+T parallelAccumulate(Iterator first, Iterator last, T init, std::size_t numberOfThreads) {
     const std::size_t length = std::distance(first, last);
 
-    if (numberOfThreads <= 1)
-    {
+    if (numberOfThreads <= 1) {
         return std::accumulate(first, last, init);
     }
-    else
-    {
+    else {
         Iterator middle = first;
         std::advance(middle, length / 2);
 

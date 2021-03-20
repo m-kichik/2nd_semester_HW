@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.17)
 project(chrono)
 
-SET (CMAKE_C_COMPILER_WORKS 1)
-SET (CMAKE_CXX_COMPILER_WORKS 1)
+set (CMAKE_C_COMPILER_WORKS 1)
+set (CMAKE_CXX_COMPILER_WORKS 1)
 set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_FLAGS "-Wdeprecated-declarations -pthread")
 set (CMAKE_CXX_FLAGS "-Wall")
@@ -19,6 +19,6 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 #find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 #INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono "HW_7/2nd task _ PARALLEL ACCUMULATE/PARALLEL_ACCUMULATE.cpp")
+add_executable(chrono "HW_7/2nd task _ PARALLEL ACCUMULATE/PARALLEL_ACCUMULATE.cpp" "HW_7/3rd task _ PARALLEL FOR_EACH/PARALLEL_FOR_EACH.cpp")
 
 #target_link_libraries(chrono Boost::locale)
