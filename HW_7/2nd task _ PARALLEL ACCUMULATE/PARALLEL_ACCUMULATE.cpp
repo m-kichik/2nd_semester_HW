@@ -35,18 +35,21 @@ void testParallelAccumulate(std::size_t numberOfCycles) {
     std::iota(std::begin(container), std::end(container), 1.);
 
     const auto numberOfThreads = std::thread::hardware_concurrency() * 2;
+//    const auto numberOfThreads = 10000u;
+
     std::vector <double> times(numberOfThreads, 0.);
+//    std::vector <double> times(5, 0.);
 
     for (auto num = 0u; num < numberOfCycles; ++num) {
-        for (auto i = 1u; i <= numberOfThreads; ++i) {
+        for (auto i = 1u, j = 0u; i <= numberOfThreads; ++i, ++j) {
             Timer t;
             parallelAccumulate(std::begin(container), std::end(container), 0., i);
             t.stop();
-            times[i-1] += static_cast<double>(t.getTime()) / numberOfCycles;
+            times[j] += static_cast<double>(t.getTime()) / numberOfCycles;
         }
     }
 
-    std::ofstream ofstream("../HW_7/2nd task _ PARALLEL ACCUMULATE/results.txt");
+    std::ofstream ofstream("../HW_7/2nd task _ PARALLEL ACCUMULATE/wide_variation.txt");
     for (auto i = 0u; i < std::size(times); ++i)
         ofstream << i + 1 << ' ' << times[i] << std::endl;
 }
@@ -54,7 +57,7 @@ void testParallelAccumulate(std::size_t numberOfCycles) {
 // time of execution = 18 min 2 s, N = 1000
 
 int main() {
-    const auto N = 1000u;
+    const auto N = 100u;
     Timer t;
     testParallelAccumulate(N);
     t.printTime();
