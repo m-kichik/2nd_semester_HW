@@ -20,5 +20,6 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 #INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
 add_executable(chrono "HW_7/4th task _ SPEED COMPETITION/SPEED_COMPETITION.cpp")
+add_executable(test Test/test.cpp)
 
 #target_link_libraries(chrono Boost::locale)
