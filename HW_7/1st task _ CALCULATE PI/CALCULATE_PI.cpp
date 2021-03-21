@@ -5,7 +5,7 @@
 #include <random>
 #include <vector>
 
-#include "TIMER.h"
+#include "../../Timer/TIMER.h"
 
 auto preCalculatePi(std::size_t numberOfPoints) {
     std::uniform_real_distribution urd(-1., 1.);
