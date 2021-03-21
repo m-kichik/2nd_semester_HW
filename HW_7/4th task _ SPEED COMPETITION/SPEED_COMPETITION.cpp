@@ -2,7 +2,6 @@
 #include <cmath>
 #include <execution>
 #include <fstream>
-#include <future>
 #include <iostream>
 #include <numeric>
 #include <vector>
