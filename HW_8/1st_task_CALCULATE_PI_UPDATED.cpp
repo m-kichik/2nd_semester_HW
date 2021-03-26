@@ -6,14 +6,14 @@
 #include <random>
 #include <vector>
 
-class parallelPiCalculator {
+class ParallelPiCalculator {
 private:
-    auto safeAddPoints(std::size_t points, std::size_t& accumulator) {
+    auto safeAddPoints(std::size_t points) {
         std::scoped_lock lock(m_mutex);
-        accumulator += points;
+        m_result += points;
     }
 
-    auto addCirclePoints(std::size_t numberOfPoints, std::size_t& pointAccumulator) {
+    auto addCirclePoints(std::size_t numberOfPoints) {
         std::uniform_real_distribution urd(-1., 1.);
         std::mt19937_64 mte(std::chrono::system_clock::now().time_since_epoch().count());
 
@@ -26,32 +26,32 @@ private:
             circlePointCounter += (x * x + y * y <= R) ? 1u : 0u;
         }
 
-        safeAddPoints(circlePointCounter, pointAccumulator);
+        safeAddPoints(circlePointCounter);
     }
 
 public:
     auto operator()(std::size_t numPoints, std::size_t numThreads) {
-        auto result = 0u;
         std::vector <std::thread> threads(numThreads - 1);
         for (auto it = 0u; it < std::size(threads); ++it) {
-            threads[it] = std::thread(&parallelPiCalculator::addCirclePoints, this, numPoints, std::ref(result));
+            threads[it] = std::thread(&ParallelPiCalculator::addCirclePoints, this, numPoints);
         }
-        addCirclePoints(numPoints, result);
+        addCirclePoints(numPoints);
         for(auto& x : threads)
             x.join();
 
-        return 4 * static_cast<long double>(result) / numPoints / numThreads;
+        return 4. * m_result / numPoints / numThreads;
     }
 
 private:
     std::mutex m_mutex;
+    std::size_t m_result{0u};
 };
 
 int main() {
     const auto numPoints = 100000000u;
     const auto numThreads = (std::thread::hardware_concurrency()) ? std::thread::hardware_concurrency() : 1u;
 
-    std::cout << "result : " << std::fixed << std::setprecision(10) << parallelPiCalculator()(numPoints, numThreads) << std::endl;
+    std::cout << "result : " << std::fixed << std::setprecision(10) << ParallelPiCalculator()(numPoints, numThreads) << std::endl;
 
     return 0;
 }

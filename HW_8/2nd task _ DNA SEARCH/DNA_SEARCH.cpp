@@ -6,7 +6,7 @@
 #include <thread>
 #include <vector>
 
-class occurenceIndicesGetter {
+class OccurenceIndicesGetter {
 private:
     template <typename T>
     void safePushBack(std::vector <T> & vec, T value) {
@@ -36,7 +36,7 @@ public:
         std::generate_n(std::back_inserter(ind), numThreads - 1, [step, &n](){return step * n++;});
 
         for(auto it = 0u; it < std::size(threads); ++it) {
-            threads[it] = std::thread(&occurenceIndicesGetter::safeFindOccurences, this, std::cref(dna),
+            threads[it] = std::thread(&OccurenceIndicesGetter::safeFindOccurences, this, std::cref(dna),
                                       ind[it], ind[it] + step + std::size(occ) - 1,
                                       std::ref(indexes), std::ref(occ));
         }
@@ -79,7 +79,7 @@ int main() {
     std::string subseq(std::size(occurence), '0');
     DNA += subseq;
 
-    auto result = occurenceIndicesGetter().getIndices(occurence, DNA);
+    auto result = OccurenceIndicesGetter().getIndices(occurence, DNA);
 
     printIndexes(result, std::cout);
 
