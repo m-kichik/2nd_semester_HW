@@ -9,16 +9,16 @@
 std::mutex mutex;
 
 template <typename T>
-void safetyPushBack(std::vector <T> & vec, T value) {
+void safePushBack(std::vector <T> & vec, T value) {
     std::lock_guard <std::mutex> lock(mutex);
     vec.push_back(value);
 }
 
-void safetyFindOccurences(const std::string& str, std::size_t pos, std::size_t last, std::vector <std::size_t> & vec, const std::string& occ) {
+void safeFindOccurences(const std::string& str, std::size_t pos, std::size_t last, std::vector <std::size_t> & vec, const std::string& occ) {
     for(auto value = str.find(occ, pos);
         (value != std::string::npos) && (value <= last);
                 pos = value + std::size(occ), value = str.find(occ, pos)) {
-        safetyPushBack(vec, value);
+        safePushBack(vec, value);
     }
 }
 
@@ -35,13 +35,13 @@ auto getOccurrenceIndices(const std::string& occ, const std::string& dna) {
     std::generate_n(std::back_inserter(ind), numOfThreads - 1, [step, &n](){return step * n++;});
 
     for(auto it = 0u; it < std::size(threads); ++it) {
-        threads[it] = std::thread(safetyFindOccurences, std::cref(dna),
+        threads[it] = std::thread(safeFindOccurences, std::cref(dna),
                                   ind[it], ind[it] + step + std::size(occ) - 1,
-                           std::ref(indexes), std::ref(occ));
+                                  std::ref(indexes), std::ref(occ));
     }
 
-    safetyFindOccurences(dna, ind[std::size(ind) - 1] + step + std::size(occ), std::size(dna) - 1,
-                         std::ref(indexes), std::ref(occ));
+    safeFindOccurences(dna, ind[std::size(ind) - 1] + step + std::size(occ), std::size(dna) - 1,
+                       std::ref(indexes), std::ref(occ));
 
     for(auto& x : threads)
         x.join();
