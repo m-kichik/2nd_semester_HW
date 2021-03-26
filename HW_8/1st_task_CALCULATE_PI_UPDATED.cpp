@@ -46,7 +46,7 @@ public:
 
 private:
 //    std::mutex m_mutex;
-    std::atomic_uint m_result{0u};
+    std::atomic <std::size_t> m_result{0u};
 };
 
 int main() {
