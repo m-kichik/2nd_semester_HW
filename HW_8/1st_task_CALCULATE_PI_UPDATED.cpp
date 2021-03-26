@@ -8,25 +8,27 @@
 
 class ParallelPiCalculator {
 private:
-    auto safeAddPoints(std::size_t points) {
+    /*auto safeAddPoints(std::size_t points) {
         std::scoped_lock lock(m_mutex);
         m_result += points;
-    }
+    }*/
 
     auto addCirclePoints(std::size_t numberOfPoints) {
         std::uniform_real_distribution urd(-1., 1.);
         std::mt19937_64 mte(std::chrono::system_clock::now().time_since_epoch().count());
 
-        auto circlePointCounter = 0u;
+//        auto circlePointCounter = 0u;
         const auto R = 1.;
 
         for (auto i = 0u; i < numberOfPoints; ++i) {
             auto x = urd(mte);
             auto y = urd(mte);
-            circlePointCounter += (x * x + y * y <= R) ? 1u : 0u;
+//            circlePointCounter += (x * x + y * y <= R) ? 1u : 0u;
+            m_result += (x * x + y * y <= R) ? 1u : 0u;
         }
 
-        safeAddPoints(circlePointCounter);
+
+//        safeAddPoints(circlePointCounter);
     }
 
 public:
@@ -43,8 +45,8 @@ public:
     }
 
 private:
-    std::mutex m_mutex;
-    std::size_t m_result{0u};
+//    std::mutex m_mutex;
+    std::atomic_uint m_result{0u};
 };
 
 int main() {
