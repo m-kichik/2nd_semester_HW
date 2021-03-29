@@ -46,11 +46,13 @@ public:
     void push(const Type& value) {
         std::scoped_lock lock(m_mutex);
         m_priorityQueue.push(value);
+        m_conditionVariable.notify_one();
     }
 
     void push(Type&& value) {
         std::scoped_lock lock(m_mutex);
         m_priorityQueue.push(std::move(value));
+        m_conditionVariable.notify_one();
     }
 
     template <typename... Args>
@@ -62,7 +64,7 @@ public:
     void waitPop(Type & value) {
         std::unique_lock < std::mutex > lock(m_mutex);
 
-        m_conditionalVariable.wait(lock, [this] {return !m_priorityQueue.empty(); });
+        m_conditionVariable.wait(lock, [this] {return !m_priorityQueue.empty(); });
         value = m_priorityQueue.top();
         m_priorityQueue.pop();
     }
@@ -70,7 +72,7 @@ public:
     std::shared_ptr < Type > waitPop() {
         std::unique_lock < std::mutex > lock(m_mutex);
 
-        m_conditionalVariable.wait(lock, [this] {return !m_priorityQueue.empty(); });
+        m_conditionVariable.wait(lock, [this] {return !m_priorityQueue.empty(); });
         auto result = std::make_shared < Type > (m_priorityQueue.top());
         m_priorityQueue.pop();
 
@@ -109,7 +111,7 @@ public:
     }
 
 private:
-    std::condition_variable m_conditionalVariable;
+    std::condition_variable m_conditionVariable;
     mutable std::mutex m_mutex;
     std::priority_queue<Type, ContainerType, Compare> m_priorityQueue;
 };
