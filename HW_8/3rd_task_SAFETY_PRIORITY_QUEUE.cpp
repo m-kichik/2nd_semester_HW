@@ -22,6 +22,13 @@ public:
     }
 
 public:
+    Type waitTop() {
+        std::unique_lock lock(m_mutex);
+
+        m_conditionVariable.wait(lock, [this] {return !m_priorityQueue.empty(); });
+        return m_priorityQueue.top();
+    }
+
     Type tryTop() {
         if (m_priorityQueue.empty()) {
             return Type();
@@ -59,6 +66,7 @@ public:
     void emplace(Args&&... value) {
         std::scoped_lock lock(m_mutex);
         m_priorityQueue.emplace(value...);
+        m_conditionVariable.notify_one();
     }
 
     void waitPop(Type & value) {
