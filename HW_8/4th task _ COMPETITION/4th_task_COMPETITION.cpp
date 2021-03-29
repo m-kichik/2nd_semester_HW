@@ -229,6 +229,7 @@ public:
         for (auto i = 10000u; i <= numOperations; i += (i < 100000) ? 10000 : 100000){
             ostream << i << ' ';
             printResults<ContainerTypes...>(ostream, numThreads, i);
+            ostream << std::endl;
         }
     }
 
@@ -244,11 +245,11 @@ int main() {
 
     std::ofstream ofstream;
 
-    ofstream.open("../HW_8/results boost stack and ts stack.txt");
+    ofstream.open("../HW_8/4th task _ COMPETITION/results boost stack and ts stack.txt");
     ContainerTester().makeResults<boost::lockfree::stack<std::size_t>, Threadsafe_Stack<std::size_t>>(ofstream, N, M);
     ofstream.close();
 
-    ofstream.open("../HW_8/results boost queue and ts (try_pop) queue.txt");
+    ofstream.open("../HW_8/4th task _ COMPETITION/results boost queue and ts (try_pop) queue.txt");
     ContainerTester().makeResults<boost::lockfree::queue<std::size_t>, Threadsafe_Queue<std::size_t>>(ofstream, N, M);
 
     return 0;
