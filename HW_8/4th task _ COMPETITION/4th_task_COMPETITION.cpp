@@ -23,8 +23,7 @@ public:
     Threadsafe_Stack() = default;
 
     Threadsafe_Stack(const Threadsafe_Stack & other) {
-        std::lock_guard < std::mutex > lock(other.m_mutex); // свой собственный мьютекс не блокируем, т.к. это конструктор,
-        // и пока мы создаём экземпляр, с ним никто работать не может
+        std::lock_guard < std::mutex > lock(other.m_mutex);
         m_data = other.m_data;
     }
 
@@ -158,7 +157,7 @@ private:
 
 private:
 
-    mutable std::mutex m_mutex; // mutable -- можно менять это поле объекта, объявленного как const
+    mutable std::mutex m_mutex;
 };
 
 class ContainerTester {
