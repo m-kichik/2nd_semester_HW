@@ -7,8 +7,6 @@ set (CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_FLAGS "-Wdeprecated-declarations -pthread")
 set (CMAKE_CXX_FLAGS "-Wall")
 #set(Boost_USE_STATIC_LIBS ON)
-#set (Boost_INCLUDE_DIR C:/boost_1_75_0/)
-#set (Boost_LIBRARY_DIR C:/boost_1_75_0/boost/lib/)
 #set(SFML_DIR C:/SFML-2.5.1)
 #set(SFML_ROOT ${SFML_DIR})
 #set(CMAKE_MODULE_PATH "${SFML_DIR}/cmake/Modules" ${CMAKE_MODULE_PATH})
@@ -16,17 +14,17 @@ set (CMAKE_CXX_FLAGS "-Wall")
 
 set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 
-#find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
-#INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
+find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
+INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono HW_8/4th_task_COMPETITION.cpp)
+add_executable(chrono "HW_8/4th task _ COMPETITION/4th_task_COMPETITION.cpp")
 
 add_executable(TASK1 HW_8/1st_task_CALCULATE_PI_UPDATED.cpp)
 add_executable(TASK2 "HW_8/2nd task _ DNA SEARCH/DNA_SEARCH.cpp")
 add_executable(TASK3 HW_8/3rd_task_SAFETY_PRIORITY_QUEUE.cpp)
-add_executable(TASK4 HW_8/4th_task_COMPETITION.cpp)
+add_executable(TASK4 "HW_8/4th task _ COMPETITION/4th_task_COMPETITION.cpp")
 
-add_executable(test Test/test.cpp)
+add_executable(test Test/Zadacha_1.cpp)
 
 #add_executable(part1 ClassWork/2021_03_25/part1/unique_lock.cpp)
 #add_executable(part2 ClassWork/2021_03_25/part2/condition_variable.cpp)

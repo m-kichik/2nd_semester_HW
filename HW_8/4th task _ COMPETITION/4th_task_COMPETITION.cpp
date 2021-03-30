@@ -225,9 +225,9 @@ public:
 
     template < typename... ContainerTypes >
     void makeResults(std::ostream& ostream, std::size_t numThreads, std::size_t numOperations) {
-        for (auto i = 10000u; i <= numOperations; i += (i < 100000) ? 10000 : 100000){
+        for (auto i = 1u; i <= numThreads; ++i){
             ostream << i << ' ';
-            printResults<ContainerTypes...>(ostream, numThreads, i);
+            printResults<ContainerTypes...>(ostream, i, numOperations);
             ostream << std::endl;
         }
     }
