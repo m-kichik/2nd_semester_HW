@@ -210,7 +210,7 @@ public:
             }
         timer.stop();
 
-        std::cout << "finished\n";
+        std::cout << numThreads << ' ' << "finished\n";
 
         return timer.getTime();
     }
@@ -225,7 +225,7 @@ public:
 
     template < typename... ContainerTypes >
     void makeResults(std::ostream& ostream, std::size_t numThreads, std::size_t numOperations) {
-        for (auto i = 1u; i <= numThreads; ++i){
+        for (auto i = 1u; i <= numThreads; i += (i < 10) ? 1 : 10){
             ostream << i << ' ';
             printResults<ContainerTypes...>(ostream, i, numOperations);
             ostream << std::endl;
@@ -239,8 +239,9 @@ private:
 };
 
 int main() {
-    const auto N = std::thread::hardware_concurrency() / 2;
-    const auto M = 1000000;
+//    const auto N = std::thread::hardware_concurrency() / 2;
+    const auto N = 100u;
+    const auto M = 1000000u;
 
     std::ofstream ofstream;
 

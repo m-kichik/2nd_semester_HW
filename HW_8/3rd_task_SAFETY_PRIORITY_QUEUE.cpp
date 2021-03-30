@@ -21,8 +21,8 @@ public:
         m_priorityQueue = other.m_priorityQueue;
     }
 
-public:
-    Type waitTop() {
+public: // function Top may cause incorrect using
+    /*Type waitTop() {
         std::unique_lock lock(m_mutex);
 
         m_conditionVariable.wait(lock, [this] {return !m_priorityQueue.empty(); });
@@ -36,7 +36,7 @@ public:
 
         std::scoped_lock lock(m_mutex);
         return m_priorityQueue.top();
-    }
+    }*/
 
 public:
     bool empty() {
@@ -50,15 +50,15 @@ public:
     }
 
 public:
-    void push(const Type& value) {
+    /*void push(const Type& value) {
         std::scoped_lock lock(m_mutex);
         m_priorityQueue.push(value);
         m_conditionVariable.notify_one();
-    }
+    }*/
 
     void push(Type&& value) {
         std::scoped_lock lock(m_mutex);
-        m_priorityQueue.push(std::move(value));
+        m_priorityQueue.push(std::forward<Type>(value));
         m_conditionVariable.notify_one();
     }
 
@@ -133,7 +133,6 @@ int main() {
     ThreadsafePriorityQueue <int, std::vector<int>> tsq2(tsq);
 
     auto s = tsq.size();
-    auto n = tsq.tryTop();
 
     int val = 0;
     tsq2.tryPop(val);
@@ -142,7 +141,7 @@ int main() {
 
     tsq.swap(tsq2);
 
-    std::cout << std::boolalpha << b << ' ' << s << ' ' << n << ' ' << val << ' ' << tp << std::endl;
+    std::cout << std::boolalpha << b << ' ' << s << ' ' << ' ' << val << ' ' << tp << std::endl;
 
     return 0;
 }
