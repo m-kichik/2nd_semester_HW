@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <condition_variable>
 #include <exception>
 #include <fstream>
@@ -5,6 +6,7 @@
 #include <iostream>
 #include <memory>
 #include <mutex>
+#include <numeric>
 #include <stack>
 #include <stdexcept>
 #include <thread>
@@ -95,7 +97,7 @@ public:
     void push(T value) {
         std::lock_guard < std::mutex > lock(m_mutex);
         m_queue.push(value);
-        m_condition_variable.notify_all();
+        m_condition_variable.notify_one();
     }
 
     void wait_and_pop(T & value) {
@@ -191,6 +193,8 @@ public:
         std::vector <std::future<void>> popThreads;
 
         ContainerT container;
+        for (auto i = 0u; i < numThreads; ++i)
+            container.push(i);
 
         for (auto i = 0u; i < numThreads; ++i) {
             pushThreads.push_back(std::async(std::launch::async,
@@ -225,7 +229,7 @@ public:
 
     template < typename... ContainerTypes >
     void makeResults(std::ostream& ostream, std::size_t numThreads, std::size_t numOperations) {
-        for (auto i = 1u; i <= numThreads; i += (i < 10) ? 1 : 10){
+        for (auto i = 1u; i <= numThreads; i += (i < 10) ? 1 : (i < 100) ? 10 : 100){
             ostream << i << ' ';
             printResults<ContainerTypes...>(ostream, i, numOperations);
             ostream << std::endl;
@@ -245,11 +249,11 @@ int main() {
 
     std::ofstream ofstream;
 
-    ofstream.open("../HW_8/4th task _ COMPETITION/results boost stack and ts stack.txt");
+    ofstream.open("../HW_8/4th task _ COMPETITION/results boost stack and ts stack 100.txt");
     ContainerTester().makeResults<boost::lockfree::stack<std::size_t>, Threadsafe_Stack<std::size_t>>(ofstream, N, M);
     ofstream.close();
 
-    ofstream.open("../HW_8/4th task _ COMPETITION/results boost queue and ts (try_pop) queue.txt");
+    ofstream.open("../HW_8/4th task _ COMPETITION/results boost queue and ts (try_pop) queue 100.txt");
     ContainerTester().makeResults<boost::lockfree::queue<std::size_t>, Threadsafe_Queue<std::size_t>>(ofstream, N, M);
 
     return 0;
