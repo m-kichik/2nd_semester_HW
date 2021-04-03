@@ -78,8 +78,6 @@ private:
             std::string message = storage->back().c_str();
             std::cout << message << std::endl;
 
-            // "\x1b[31mHello\x1b[0m"
-
             if (leftChat) break;
         }
     }
