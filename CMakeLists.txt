@@ -17,14 +17,16 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono "HW_8/4th task _ COMPETITION/4th_task_COMPETITION.cpp")
+add_executable(chrono HW_9/chat.cpp)
+add_executable(pr1 Test/t2.cpp)
+add_executable(pr2 Test/t1.cpp)
 
 add_executable(TASK1 HW_8/1st_task_CALCULATE_PI_UPDATED.cpp)
 add_executable(TASK2 "HW_8/2nd task _ DNA SEARCH/DNA_SEARCH.cpp")
 add_executable(TASK3 HW_8/3rd_task_SAFETY_PRIORITY_QUEUE.cpp)
 add_executable(TASK4 "HW_8/4th task _ COMPETITION/4th_task_COMPETITION.cpp")
 
-add_executable(test Test/Zadacha_1.cpp)
+add_executable(test Test/test.cpp)
 
 #add_executable(part1 ClassWork/2021_03_25/part1/unique_lock.cpp)
 #add_executable(part2 ClassWork/2021_03_25/part2/condition_variable.cpp)
