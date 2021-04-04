@@ -17,7 +17,9 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(chrono HW_9/chat.cpp)
+add_executable(hw9_chat HW_9/chat.cpp)
+add_executable(hw9_protector HW_9/protector.cpp)
+
 add_executable(pr1 Test/t2.cpp)
 add_executable(pr2 Test/t1.cpp)
 

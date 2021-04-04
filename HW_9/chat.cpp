@@ -5,6 +5,7 @@
 #include <mutex>
 #include <string>
 #include <thread>
+#include <utility>
 
 #include <boost/interprocess/containers/list.hpp>
 #include <boost/interprocess/containers/string.hpp>
@@ -30,69 +31,84 @@ private:
     const std::string conditionName = "condition";
 
 public:
-    ChatMaker() : sharedMemory(boost::interprocess::open_or_create,
+    ChatMaker(std::string name = "user") : sharedMemory(boost::interprocess::open_or_create,
                    sharedMemoryName.c_str(), memSize),
-                   strAlloc(sharedMemory.get_segment_manager()) {
+                   strAlloc(sharedMemory.get_segment_manager()),
+                   userName(std::move(name)) {
         storage = sharedMemory.find_or_construct< sharedStringList_t >(storageName.c_str())(strAlloc);
         mutex = sharedMemory.find_or_construct< boost::interprocess::interprocess_mutex >(mutexName.c_str())();
         condition = sharedMemory.find_or_construct< boost::interprocess::interprocess_condition >(conditionName.c_str())();
         numberUsers = sharedMemory.find_or_construct< std::atomic < std::size_t > >(numUsersName.c_str())();
         numberMessages = sharedMemory.find_or_construct< std::atomic < std::size_t > >(numMessagesName.c_str())();
-        (*numberUsers) ++;
         boost::interprocess::scoped_lock lock(*mutex);
         localNumMessages = *numberMessages;
+        (*numberUsers) ++;
         leftChat = false;
     }
 
-    ~ ChatMaker() {
-        if (! -- (*numberUsers))
-            boost::interprocess::shared_memory_object::remove(sharedMemoryName.c_str());
-        std::cout << "chating finished" << std::endl;
-    }
+    ~ ChatMaker() = default;
 
 private:
+    void printPreviuosMesages() {
+        std::cout << "Previous messages:" << std::endl;
+        boost::interprocess::scoped_lock lock(*mutex);
+        for (const auto& prevMes : *storage)
+            std::cout << prevMes.c_str() << std::endl;
+    }
+
+    void addMessage(const std::string& prepMessage) {
+        sharedString_t message(prepMessage.c_str(), strAlloc);
+
+        boost::interprocess::scoped_lock lock(*mutex);
+        if (std::size(*storage) == largestNumberMessages)
+            storage->pop_front();
+        storage -> push_back(message);
+        (*numberMessages) ++;
+        localNumMessages ++;
+        condition->notify_all();
+    }
+
     bool messaging() {
-        std::cout << "Start chatting: " << std::endl;
         std::string rowMessage;
         for (; std::getline(std::cin, rowMessage);) {
-            sharedString_t message(rowMessage.c_str(), strAlloc);
-
-            boost::interprocess::scoped_lock lock(*mutex);
-            if (std::size(*storage) == largestNumberMessages)
-               storage -> pop_front();
-            storage -> push_back(message);
-            (*numberMessages) ++;
-            localNumMessages ++;
-            condition -> notify_all();
+            const char* sep = ": ";
+            std::string prepMessage = userName + sep + rowMessage;
+            addMessage(prepMessage);
         }
 
         return true;
     }
 
     void reading() {
+        if (!storage->empty())
+            printPreviuosMesages();
+        addMessage(userName + " started messaging!");
+        std::cout << "Start messaging: " << std::endl;
         for (;;) {
             std::unique_lock lock(*mutex);
-            condition -> wait(lock, [this]() { return localNumMessages != *numberMessages; });
-
+            condition->wait(lock, [this]() { return localNumMessages != *numberMessages || leftChat; });
+            if (leftChat) break;
             localNumMessages = *numberMessages;
             std::string message = storage->back().c_str();
             std::cout << message << std::endl;
-
-            if (leftChat) break;
         }
     }
 
-    void leaveChat() {
-        if (! -- (*numberUsers))
-            boost::interprocess::shared_memory_object::remove(sharedMemoryName.c_str());
+    void leaveChat(std::thread& reader) {
         leftChat = true;
+        condition->notify_all();
+        reader.join();
+        (*numberUsers) --;
+        addMessage(userName + " leaved chat");
+        if (!(*numberUsers))
+            boost::interprocess::shared_memory_object::remove(sharedMemoryName.c_str());
     }
 
 public:
     void startMessaging() {
         auto reader = std::thread(&ChatMaker::reading, this);
         auto isStopped = messaging();
-        if (isStopped) leaveChat();
+        if (isStopped) leaveChat(reader);
     }
 
 private:
@@ -106,11 +122,17 @@ private:
     stringAllocator strAlloc;
     boost::interprocess::interprocess_mutex* mutex;
     boost::interprocess::interprocess_condition* condition;
+    std::string userName;
     bool leftChat;
 };
 
 int main() {
-    ChatMaker().startMessaging();
+    std::string name;
+    std::cout << "Enter your name:" << std::endl;
+    std::getline(std::cin, name);
+    ChatMaker(name).startMessaging();
+
+    system("pause");
 
     return 0;
 }
