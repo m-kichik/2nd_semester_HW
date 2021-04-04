@@ -68,15 +68,13 @@ private:
         condition->notify_all();
     }
 
-    bool messaging() {
+    void messaging() {
         std::string rowMessage;
+        const char* sep = ": ";
         for (; std::getline(std::cin, rowMessage);) {
-            const char* sep = ": ";
             std::string prepMessage = userName + sep + rowMessage;
             addMessage(prepMessage);
         }
-
-        return true;
     }
 
     void reading() {
@@ -107,8 +105,8 @@ private:
 public:
     void startMessaging() {
         auto reader = std::thread(&ChatMaker::reading, this);
-        auto isStopped = messaging();
-        if (isStopped) leaveChat(reader);
+        messaging();
+        leaveChat(reader);
     }
 
 private:
@@ -123,7 +121,7 @@ private:
     boost::interprocess::interprocess_mutex* mutex;
     boost::interprocess::interprocess_condition* condition;
     std::string userName;
-    bool leftChat;
+    std::atomic < bool > leftChat;
 };
 
 int main() {
