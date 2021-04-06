@@ -97,7 +97,7 @@ private:
         condition->notify_all();
         reader.join();
         (*numberUsers) --;
-        addMessage(userName + " leaved chat");
+        addMessage(userName + " left chat");
         if (!(*numberUsers))
             boost::interprocess::shared_memory_object::remove(sharedMemoryName.c_str());
     }
