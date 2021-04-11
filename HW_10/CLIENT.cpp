@@ -63,11 +63,11 @@ public:
 
         auto retVal = writing();
 
-        reader.join();
-
         if(retVal) {
             boost::asio::write(socket, boost::asio::buffer(userName + ": " + leavingChat + endSymbol));
         }
+
+        reader.join();
 
         std::cout << "Chat left successfully" << std::endl;
 
