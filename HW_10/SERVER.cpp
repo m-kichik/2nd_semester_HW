@@ -1,11 +1,14 @@
 #include <iostream>
 #include <thread>
 
+#include <winsock2.h>
+#include <windows.h>
+
 #include <boost/asio.hpp>
 
 class ChatClient {
 public:
-    ChatClient(std::string  name) : userName(std::move(name)), endpoint(boost::asio::ip::address_v4::any(), port),
+    explicit ChatClient(std::string  name) : userName(std::move(name)), endpoint(boost::asio::ip::address_v4::any(), port),
                                     acceptor(ioService, endpoint.protocol()),
                                     socket(ioService) {
         connectionFailure = establishConnection();
@@ -48,6 +51,7 @@ private:
             std::getline(input_stream, message, '\n');
 
             std::cout << message << std::endl;
+            Beep(400, 800);
 
             if (message.ends_with(leavingChat)) break;
         }
