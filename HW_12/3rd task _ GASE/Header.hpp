@@ -14,7 +14,7 @@ namespace cts { // consts
 	const std::size_t length = 600;
 	const std::size_t width = 800;
 
-	const std::size_t numberParticles = 1000;
+	const std::size_t numberParticles = 2500;
 
 	const float moleculeDiameter = 3.0;
 

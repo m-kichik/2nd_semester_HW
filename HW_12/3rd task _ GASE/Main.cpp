@@ -24,7 +24,7 @@ struct fieldColor {
     sf::Color c_0 = {255, 255, 255};*/
 };
 
-const auto cellSize = 40u;
+const auto cellSize = 20u;
 const auto fieldLen = cts::length / cellSize;
 const auto fieldWid = cts::width / cellSize;
 
@@ -135,7 +135,7 @@ void runGas() {
                 particles[i].moleculeRun();
 
             for (auto &thread : threads)
-                thread.join();
+                thread.detach();
 
             /*for (auto& p : particles)
                 p.moleculeRun();*/

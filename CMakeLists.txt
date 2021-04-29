@@ -26,6 +26,11 @@ add_executable(fractal "ClassWork/2021_04_29/mandelbrot/main.cpp"
         "ClassWork/2021_04_29/mandelbrot/view.hpp"
         "ClassWork/2021_04_29/mandelbrot/visualizer.cpp" "ClassWork/2021_04_29/mandelbrot/visualizer.hpp")
 
+add_executable(fractal2 "HW_12/1st task _ JULIA/main.cpp"
+        "HW_12/1st task _ JULIA/calculator.cpp" "HW_12/1st task _ JULIA/calculator.hpp"
+        "HW_12/1st task _ JULIA/view.hpp"
+        "HW_12/1st task _ JULIA/visualizer.cpp" "HW_12/1st task _ JULIA/visualizer.hpp")
+
 add_executable(particles "ClassWork/2021_04_29/particles/main.cpp"
         "ClassWork/2021_04_29/particles/link.cpp" "ClassWork/2021_04_29/particles/link.hpp"
         "ClassWork/2021_04_29/particles/functions.hpp"
@@ -43,6 +48,7 @@ add_executable(test Test/test.cpp Tinkoff_contest/t3.cpp)
 #target_link_libraries(game ${SFML_LIBRARIES})
 target_link_libraries(gas sfml-graphics sfml-system sfml-window)
 target_link_libraries(fractal sfml-graphics sfml-system sfml-window)
+target_link_libraries(fractal2 sfml-graphics sfml-system sfml-window)
 target_link_libraries(particles sfml-graphics sfml-system sfml-window)
 target_link_libraries(gas wsock32 ws2_32)
 
