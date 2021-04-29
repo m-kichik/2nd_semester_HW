@@ -19,7 +19,19 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(game 10_1_Client.cpp)
+add_executable(gas "HW_12/3rd task _ GASE/Header.hpp" "HW_12/3rd task _ GASE/Main.cpp" "HW_12/3rd task _ GASE/Functions.cpp")
+
+add_executable(fractal "ClassWork/2021_04_29/mandelbrot/main.cpp"
+        "ClassWork/2021_04_29/mandelbrot/calculator.cpp" "ClassWork/2021_04_29/mandelbrot/calculator.hpp"
+        "ClassWork/2021_04_29/mandelbrot/view.hpp"
+        "ClassWork/2021_04_29/mandelbrot/visualizer.cpp" "ClassWork/2021_04_29/mandelbrot/visualizer.hpp")
+
+add_executable(particles "ClassWork/2021_04_29/particles/main.cpp"
+        "ClassWork/2021_04_29/particles/link.cpp" "ClassWork/2021_04_29/particles/link.hpp"
+        "ClassWork/2021_04_29/particles/functions.hpp"
+        "ClassWork/2021_04_29/particles/particle.cpp" "ClassWork/2021_04_29/particles/particle.cpp"
+        "ClassWork/2021_04_29/particles/pressure.cpp" "ClassWork/2021_04_29/particles/pressure.hpp"
+        "ClassWork/2021_04_29/particles/system.cpp" "ClassWork/2021_04_29/particles/system.hpp")
 
 add_executable(TASK1 HW_8/1st_task_CALCULATE_PI_UPDATED.cpp)
 add_executable(TASK2 "HW_8/2nd task _ DNA SEARCH/DNA_SEARCH.cpp")
@@ -29,7 +41,9 @@ add_executable(TASK4 "HW_8/4th task _ COMPETITION/4th_task_COMPETITION.cpp")
 add_executable(test Test/test.cpp Tinkoff_contest/t3.cpp)
 
 #target_link_libraries(game ${SFML_LIBRARIES})
-target_link_libraries(game sfml-graphics sfml-system sfml-window)
-target_link_libraries(game wsock32 ws2_32)
+target_link_libraries(gas sfml-graphics sfml-system sfml-window)
+target_link_libraries(fractal sfml-graphics sfml-system sfml-window)
+target_link_libraries(particles sfml-graphics sfml-system sfml-window)
+target_link_libraries(gas wsock32 ws2_32)
 
 #target_link_libraries(chrono Boost::locale)
