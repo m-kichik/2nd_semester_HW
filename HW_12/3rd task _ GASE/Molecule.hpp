@@ -1,4 +1,6 @@
-#pragma once
+#ifndef CHRONO_MOLECULE_H
+#define CHRONO_MOLECULE_H
+
 // 1 пиксель = 0,1 нанометра
 
 // средн€€ скорость молекул в газе = 400 м/с, у нас - 400 пикс/с = 40 нм/с, врем€ в 10^10 затормозили
@@ -6,9 +8,7 @@
 // --- при timeConstSpeed = 0.02, соответственно смотрим на const_of_speed дл€ перевода
 
 // 0,3 нм = диаметр кислорода, у нас частицы в 10 раз больше (отн. масштаба), потому что мы можем!
-
 #include <vector>
-#include <fstream>
 
 namespace cts { // consts
 	const std::size_t length = 600;
@@ -57,6 +57,4 @@ private:
 	float m_speed_y;
 };
 
-Molecule create();
-
-void changeParticlesSpeed(std::vector <Molecule>& particles);
+#endif

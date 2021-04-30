@@ -19,7 +19,10 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,--stack,10000000")
 find_package(Boost 1.71.0 REQUIRED COMPONENTS locale)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
-add_executable(gas "HW_12/3rd task _ GASE/Header.hpp" "HW_12/3rd task _ GASE/Main.cpp" "HW_12/3rd task _ GASE/Functions.cpp")
+add_executable(gas "HW_12/3rd task _ GASE/Molecule.hpp" "HW_12/3rd task _ GASE/Main.cpp"
+        "HW_12/3rd task _ GASE/Molecule.cpp"
+        "HW_12/3rd task _ GASE/Functions.cpp" "HW_12/3rd task _ GASE/Functions.h"
+        "HW_12/3rd task _ GASE/Visualizer.cpp" "HW_12/3rd task _ GASE/Visualizer.h")
 
 add_executable(fractal "ClassWork/2021_04_29/mandelbrot/main.cpp"
         "ClassWork/2021_04_29/mandelbrot/calculator.cpp" "ClassWork/2021_04_29/mandelbrot/calculator.hpp"
@@ -33,7 +36,7 @@ add_executable(fractal2 "HW_12/1st task _ JULIA/main.cpp"
 
 add_executable(particles "ClassWork/2021_04_29/particles/main.cpp"
         "ClassWork/2021_04_29/particles/link.cpp" "ClassWork/2021_04_29/particles/link.hpp"
-        "ClassWork/2021_04_29/particles/functions.hpp"
+        "ClassWork/2021_04_29/particles/Molecula.hpp"
         "ClassWork/2021_04_29/particles/particle.cpp" "ClassWork/2021_04_29/particles/particle.cpp"
         "ClassWork/2021_04_29/particles/pressure.cpp" "ClassWork/2021_04_29/particles/pressure.hpp"
         "ClassWork/2021_04_29/particles/system.cpp" "ClassWork/2021_04_29/particles/system.hpp")
